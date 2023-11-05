@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title><%= title %></title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <%- include ('header.ejs') %>
+    <div class="login-container ">
+      <div class="login-ask">
+        <h1 style="color: rgb(255, 0, 149); font-family: 'Times New Roman', Times, serif;">📝 Welcome everyone to our Learning Platform!! </h1>
+        <h4><i>Join our community of educators and learners to explore and enhance your skills!</i></h4>
+        <p>📌 New to our platform? <a href="/signup">Sign-up here</a></p>
+        <p>📌 Already part of our community? <a href="/login">Sign-in</a></p>
+        <%- include ('footer.ejs') %>
+      </div>
+    </div>
+  </body>
+</html>
