@@ -32,7 +32,7 @@ app.use(
     }),
 );
 
-const { Users, courses, Chapters, Pages, Enrollments } = require("./models");
+const { Users, courses, chapters, Pages, enrollments } = require("./models");
 
 // Passport.js setup
 app.use(passport.initialize());
@@ -131,21 +131,21 @@ app.post("/users", async (request, response) => {
     // Similar to your student registration route
     // You can use passport.authenticate after registration to log in the student
     if (!request.body.role) {
-        request.flash("error", "Role can not be empty!");
+        request.flash("error", "Please enter Role!!");
         return response.redirect("/signup");
     }
     if (request.body.email.length == 0) {
-        request.flash("error", "Email can not be empty!");
+        request.flash("error", "Please enter Email!!");
         return response.redirect("/signup");
     }
 
     if (request.body.firstName.length == 0) {
-        request.flash("error", "First name cannot be empty!");
+        request.flash("error", "Please enter first name!!");
         return response.redirect("/signup");
     }
 
     if (request.body.lastName.length == 0) {
-        request.flash("error", "Last name cannot be empty!");
+        request.flash("error", "Please enter last name!!");
         return response.redirect("/signup");
     }
 
@@ -213,9 +213,9 @@ app.get(
 
         try {
             // Fetch the existing courses from the database
-            const existingCourses = await Courses.findAll();
+            const existingCourses = await courses.findAll();
             const existingUsers = await Users.findAll();
-            const existingEnrollments = await Enrollments.findAll();
+            const existingEnrollments = await enrollments.findAll();
 
             // Render the teacher-dashboard page and pass the courses to it
             response.render("teacher-dashboard", {
@@ -265,7 +265,7 @@ app.post(
 
         try {
             // Create a new course and insert it into the database
-            await Courses.create({
+            await courses.create({
                 courseName: request.body.courseName,
                 courseDescription: request.body.courseDescription,
                 userId: request.user.id,
@@ -355,15 +355,15 @@ app.get("/view-course/:id", async (request, response) => {
         const courseId = request.params.id;
         console.log("course id: ", courseId);
         // Fetch the course details based on the courseId
-        const course = await Courses.findByPk(courseId);
+        const course = await courses.findByPk(courseId);
         const userofCourse = await Users.findByPk(course.userId);
 
         const currentUserId = request.query.currentUserId;
         const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));
-        const existingEnrollments = await Enrollments.findAll();
+        const existingEnrollments = await enrollments.findAll();
 
         // Fetch chapters associated with the course
-        const chapters = await Chapters.findAll({ where: { courseId } });
+        const chapters = await chapters.findAll({ where: { courseId } });
 
         if (!course) {
             // Handle cases where the course is not found
@@ -392,7 +392,7 @@ app.get(
     connnectEnsureLogin.ensureLoggedIn(),
     async (request, response) => {
         const courseId = request.params.id;
-        const course = await Courses.findByPk(courseId);
+        const course = await courses.findByPk(courseId);
         const userOfCourseId = course.userId;
         const userOfCourse = await Users.findByPk(userOfCourseId);
 
@@ -433,7 +433,7 @@ app.post(
 
         try {
             // Create a new chapter and insert it into the database
-            await Chapters.create({
+            await chapters.create({
                 chapterName: request.body.chapterName,
                 chapterDescription: request.body.chapterDescription,
                 courseId,
@@ -454,12 +454,12 @@ app.get(
     connnectEnsureLogin.ensureLoggedIn(),
     async (request, response) => {
         const chapterId = request.params.id;
-        const chapter = await Chapters.findByPk(chapterId);
+        const chapter = await chapters.findByPk(chapterId);
         const courseId = chapter.courseId;
-        const course = await Courses.findByPk(courseId);
+        const course = await courses.findByPk(courseId);
         const userOfCourseId = course.userId;
         const userOfCourse = await Users.findByPk(userOfCourseId);
-        const existingEnrollments = await Enrollments.findAll();
+        const existingEnrollments = await enrollments.findAll();
 
         const currentUserId = request.query.currentUserId;
         const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));
@@ -530,7 +530,7 @@ app.get(
             // Fetch the existing courses, users, enrollments from the database
             const existingCourses = await courses.findAll();
             const existingUsers = await Users.findAll();
-            const existingEnrollments = await Enrollments.findAll();
+            const existingEnrollments = await enrollments.findAll();
 
             // Render the teacher-dashboard page and pass the courses to it
             response.render("student-dashboard", {
@@ -558,7 +558,7 @@ app.post(
         // Get the current user (student)
         const currentUserId = request.query.currentUserId;
 
-        const existingEnrollment = await Enrollments.findOne({
+        const existingEnrollment = await enrollments.findOne({
             where: { userId: currentUserId, courseId },
         });
 
@@ -570,7 +570,7 @@ app.post(
         }
 
         // Record the enrollment in the Enrollments model
-        await Enrollments.create({
+        await enrollments.create({
             userId: currentUserId,
             courseId,
             noOfChapCompleted: 0,
@@ -590,7 +590,7 @@ app.get(
 
         try {
             // Fetch the courses that the current user is enrolled in
-            const enrolledCourses = await Enrollments.findAll({
+            const enrolledCourses = await enrollments.findAll({
                 where: { userId: currentUser.id },
             });
 
@@ -598,7 +598,7 @@ app.get(
             const courseIds = enrolledCourses.map(
                 (enrollment) => enrollment.courseId,
             );
-            const courses = await Courses.findAll({ where: { id: courseIds } });
+            const courses = await courses.findAll({ where: { id: courseIds } });
 
             // Render the stuMyCourses page and pass the enrolled courses to it
             response.render("stuMyCourses", {
@@ -662,7 +662,7 @@ app.delete(
         console.log("We have to delete a course with ID: ", request.params.id);
 
         try {
-            const status = await Courses.remove(request.params.id);
+            const status = await courses.remove(request.params.id);
             return response.json(status ? true : false);
         } catch (err) {
             return response.status(422).json(err);
