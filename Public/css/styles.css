@@ -1,0 +1,30 @@
+body {
+    margin: 0px;
+
+    font-family: 'Times New Roman', Times, serif;
+    width: 100vw;
+    height: 100vw;
+
+    background-color: mintcream;
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    background-color: rgb(0, 255, 225);
+
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-ask {
+    background: #ffe8b1;
+    padding: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.2rem;
+    border: 3px solid #f77801;
+    border-radius: 5px;
+    margin: 3px;
+    text-align: justify;
+    box-shadow: 5px 5px rgb(251, 74, 145)
+}
