@@ -14,20 +14,20 @@
         <div class="col-start-2 col-span-2">
             <%- include ('header.ejs') %>
             <div class="py-4 flex flex-col ml-6 mr-6 mt-3">
-                <div class="py-2 border-b-2 m-2" style="display: flex; justify-content: space-between;">
+                <div class="py-2 border-b-2 m-2 bg-gray-200 rounded px-2" style="display: flex; justify-content: space-between;">
                     <h1 class="text-black-600 text-xl font-semibold">Welcome, <br> Student: <%= currentUser.firstName %> <%= currentUser.lastName %> </h1>
                     <a href="/signout" class="text-green-600 text-xl font-semibold">Signout</a>
                 </div>
                 <div class="border-b-2 m-1">
                     <h1 class="text-xl font-bold text-blue-600 m-1">
-                        🚀Unlock Your Potential: Your Learning Adventure Begins Here!
+                        🌟Embark on Your Journey to Unleash Your Potential: Your Educational Adventure Begins Now!
                     </h1>
                     <p class="text-medium text-gray-700 m-3">
-                        Dive into a world of knowledge. Explore our diverse courses and embark on your journey to success.
+                        Immerse yourself in a realm of wisdom. Discover our wide range of courses and set sail on your path to achievement.
                     </p>                
                 </div>
-                <div class="m-2 flex flex-row justify-evenly bg-yellow-100">
-                    <a href="/MyCourses" class="bg-blue-600 text-white px-5 py-2 rounded font-medium hover:bg-blue-700 text-center block">
+                <div class="m-2 flex flex-row justify-evenly bg-gray-400 py-2 rounded border " style="box-shadow: 3px 3px rgb(243, 49, 81);">
+                    <a href="/stuMyCourses" class="bg-blue-600 text-white px-5 py-2 rounded font-medium hover:bg-blue-700 text-center block">
                         My Enrolled Courses
                     </a>
                     <a href="/changePassword" class="bg-red-600 text-white px-5 py-2 rounded font-medium hover:bg-red-700 text-center block">
